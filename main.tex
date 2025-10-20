@@ -1,0 +1,296 @@
+
+
+%---------------------------%
+% Packages
+%---------------------------%
+
+\documentclass[a4paper,10pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{gensymb}
+\usepackage{siunitx}
+\usepackage{ragged2e}
+\usepackage{float}
+\usepackage[makeroom]{cancel}
+\usepackage[style=apa, backend=biber]{biblatex}
+\addbibresource{refs.bib}
+\usepackage[margin=1in]{geometry}
+\usepackage{colortbl}
+\usepackage{chemfig}
+\usepackage{booktabs}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{placeins}
+\usepackage{lipsum}
+\usepackage{physics}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, width=10cm}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{pdfpages}
+\usepackage{tabularx}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{multirow}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+
+
+
+%---------------------------%
+% Preamble
+%---------------------------%
+
+
+
+
+
+\begin{document}
+
+\fancypagestyle{plain}{} %This sets the header and footers up.
+    \fancyhf{}
+    \rfoot{Page \thepage}
+    \lfoot{Kristian Stracke \\ s4037579@student.rmit.edu.au}
+    \renewcommand{\headrulewidth}{0pt}
+    \pagestyle{fancy}
+
+\newenvironment{FRpage}{%
+  \clearpage
+  \begin{landscape}
+  \thispagestyle{plain}
+  \begingroup
+  \footnotesize
+  \setlength{\tabcolsep}{3.5pt} % narrower column padding
+}{%
+  \endgroup
+  \end{landscape}
+  \clearpage
+}
+
+%---------------------------%
+% Coverpage
+%---------------------------%
+
+\author{Kristian Stracke, Bailey Firman, Angus Liaubon, William Collins, Adam Blunt}\\
+\date{\today\\[2ex]
+RMIT University – Bachelor of Engineering (Mechanical) Program Code – BH070 \\
+\bigskip
+Systems Engineering Principles MIET2385 – Professor John Mo}
+
+
+\title{\includegraphics*[scale=0.1]{rmit-university-logo.png} \\[14ex] \textbf{Strap Launcher Detailed Design}} %This renders the graphics for the logo
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\tableofcontents
+\listoftables
+\listoffigures
+\setcounter{page}{1}
+
+\justifying
+
+
+%---------------------------%
+% Document
+%---------------------------%
+
+
+\newpage
+
+\section{Introduction}
+
+\subsection{Addressing Previous Deliverables}
+
+\subsection{Consolidation of Client Intentions}
+
+\newpage
+
+\section{Summary of Functions and Sub-Systems}
+
+\subsection{Functions}
+
+\subsubsection{Prepare Device}
+
+The purpose of this function is to take the device from its stowed configuration into its ready to load configuration.
+
+\paragraph{Process of function}
+
+
+\begin{itemize}
+    \item Inspect device and make sure it is visibly in working order with no obvious damage.
+    \item Connect the appropriate power/pneumatic connection, depending on the users needs in the situation.
+    \item Onboard controller tests for any electrical faults or sensor lock outs that would prevent the device from operating properly and more importantly preventing putting the operator and/or device in danger.
+    \item Onboard controller signals an LED to display the readiness state of the device clearly to the operator.
+\end{itemize}
+
+\paragraph{Performance Requirements for function}
+
+\begin{itemize}
+    \item Setup completed in $<60$ Seconds by single operator.
+    \item Diagnostics check $<5$ Seconds. 
+\end{itemize}
+
+
+\subsubsection{Launch Strap}
+
+The purpose of this function is to prepare the device to fire the strap over the load. 
+
+\paragraph{Process of function}
+
+
+\begin{itemize}
+    \item Onboard controller validates the interlocks and pressure/charge condition of the device.
+    \item Trigger initiates the launching sequence for the strap.
+    \item Either the flywheel or the pneumatic piston accelerates the strap through the launch chamber.
+    \item Damping assembly mitigates the recoil to $< 50N$
+\end{itemize}
+
+\paragraph{Performance Requirements for function}
+
+\begin{itemize}
+    \item Launch Height for a load of $\geq$ 5 Meters high and, 2.7 Metres in width.
+    \item Emergency cutoff halts operation if a fault is detected.
+\end{itemize}
+
+\newpage
+
+\subsubsection{Maintenance/Fault Reporting}
+
+The purpose of this function is to log information about the devices operation to the memory on the onboard controller that would be relevant to maintaining the device. i.e; The number of launches since last service, The total number of launches and cycles of the battery. As well as logging any faults the device may have encountered.
+
+\paragraph{Process of function}
+
+\begin{itemize}
+    \item If a fault is detected the onboard controller will determine if it is critical and prevent operation or if it is minor and allow operation possibly in a limp mode or simply log the error for maintenance,
+    \item Record the launch count in that specific cycle and add it to the total number.
+    \item Record the battery cycle count.
+\end{itemize}
+
+\paragraph{Performance Requirements for function}
+
+\begin{itemize}
+    \item Operate with 100\% reliability with exact launch and cycle counts.
+    \item Prevent the device from operating if there is an outstanding maintenance issue or an exceptional circumstance presents itself.
+\end{itemize}
+
+
+
+
+
+\subsubsection{Stow Device}
+
+The purpose of this function is to return the device to its safe state ready to store for the next time it is needed.
+
+\paragraph{Process of function}
+
+
+\begin{itemize}
+    \item Disarm the power system, Bleed any leftover air in system.
+    \item Onboard controller logs the number of launches or any faults that need to be reported for maintainence.
+    \item Remove chargeable battery to be placed in cradle.
+    \item Fold down device so it is returned to it's starting position.
+\end{itemize}
+
+\paragraph{Performance Requirements for function}
+
+\begin{itemize}
+    \item Stowed in $<90$ Seconds by single operator.
+    \item Display charging state of battery with LED indicator.
+    \item No residual pressure in pneumatic system.
+\end{itemize}
+
+
+\newpage
+
+\subsection{Subsystem Explanation}
+
+\subsubsection{User Interface and Control}
+
+\subsubsection{Propulsion and Power}
+
+\subsubsection{Launch Mechanism}
+
+\subsubsection{Payload and Strap Handling}
+
+\subsubsection{Safety}
+
+\subsection{Test Plans}
+
+\newpage
+
+\section{Numerical Proof of Functions}
+
+\subsection{Launch energy required to satisfy requirements}
+
+\subsubsection{Launch Energy/Force Sizing}
+
+\subsubsection{Drive Torque and Power Comparison}
+
+\subsection{Estimation of Time Requirements}
+
+\subsection{Calculation of Real-time Requirements}
+
+\subsubsection{Cycle Times by Mode}
+
+\subsubsection{Total Time per Mission}
+
+\newpage
+
+\section{Assembly Drawings}
+
+\newpage
+
+\section{Systems Engineering Management Plan (SEMP)}
+
+\subsection{Scope and Objectives}
+
+\subsection{Roles and Responsibilities}
+
+\subsection{Work Breakdown Structure}
+
+\subsection{Schedule and Milestones}
+
+\subsection{Risk Management}
+
+\subsection{Verification and Validation Plan}
+
+\subsection{Configuration Management}
+
+\subsection{Quality Management}
+
+\subsection{Safety Management}
+
+\subsection{Maintenance and Support Plan}
+
+\newpage
+
+\printbibliography
+
+\newpage
+
+\appendix
+
+\section{FFBDs}
+
+\section{Function Tree}
+
+\section{UR--SR Traceability Matrix}
+
+\section{Interface Definitions}
+
+\section{Test Procedures}
+
+\end{document}
+
