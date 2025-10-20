@@ -1,41 +1,59 @@
+\documentclass[a4paper,10pt]{article} %can change the doc wide font size here if needed
 
+%-------------%
+%Packages
+%-------------%
 
-%---------------------------%
-% Packages
-%---------------------------%
-
-\documentclass[a4paper,10pt]{article}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
+%document formatting packages
 \usepackage{fancyhdr}
-\usepackage{threeparttable}
-\usepackage{gensymb}
-\usepackage{siunitx}
 \usepackage{ragged2e}
 \usepackage{float}
 \usepackage[makeroom]{cancel}
-\usepackage[style=apa, backend=biber]{biblatex}
-\addbibresource{refs.bib}
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=1in]{geometry} %can be useful to change if you have large tables or figures
+\usepackage{lipsum}
+\usepackage{pdfpages}
+
+%Table packages
 \usepackage{colortbl}
-\usepackage{chemfig}
+\usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{lscape}
 \usepackage{longtable}
+\usepackage{threeparttable}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+%Math rendering related packages
+\usepackage{amsmath}
+\usepackage{physics}
+\usepackage{gensymb}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage{textcomp}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+%figure generation/management packages
+\usepackage{chemfig}
 \usepackage{wrapfig}
 \usepackage{placeins}
-\usepackage{lipsum}
-\usepackage{physics}
+\usepackage{graphicx}
+
+%pgf plots setup
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18, width=10cm}
-\usepackage{hyperref}
-\usepackage{multirow}
-\usepackage{pdfpages}
-\usepackage{tabularx}
+
+
+%list creation packages
 \usepackage{enumerate}
 \usepackage{enumitem}
-\usepackage{multirow}
+
+%referencing setup/style
+\usepackage[style=apa, backend=biber]{biblatex}
+\addbibresource{References.bib}
+
+%for making the links you can press on for references and tables etc.
+\usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -44,7 +62,6 @@
     pdftitle={Overleaf Example},
     pdfpagemode=FullScreen,
     }
-
 
 
 
@@ -61,7 +78,6 @@
 \fancypagestyle{plain}{} %This sets the header and footers up.
     \fancyhf{}
     \rfoot{Page \thepage}
-    \lfoot{Kristian Stracke \\ s4037579@student.rmit.edu.au}
     \renewcommand{\headrulewidth}{0pt}
     \pagestyle{fancy}
 
@@ -93,28 +109,41 @@ Systems Engineering Principles MIET2385 – Professor John Mo}
 
 \maketitle
 \thispagestyle{empty}
+
+\pagenumbering{roman}
+\setcounter{page}{0}
+
 \newpage
 
 \tableofcontents
 \listoftables
 \listoffigures
-\setcounter{page}{1}
+
+\newpage
 
 \justifying
 
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
 %---------------------------%
 % Document
 %---------------------------%
 
 
-\newpage
-
 \section{Introduction}
 
 \subsection{Addressing Previous Deliverables}
 
+The first deliverable saw groups of students collaborating on developing an effective solution for assisting with strapping loads on trucks and trailers. With information provided with the scenario depictions and the supplied Q and A, the team was able to develop a solution that is viable for the local market and use with the farmer's patented technology, the strap weight. \\ \bigskip
+
+The proposed solution saw a device utilising a flywheel system to propel 
+
 \subsection{Consolidation of Client Intentions}
+
+After having investigated all related provided information from the farmer and delivery drivers consulted in regards to their requirements, their needs have been categorised below:
+
+%Insert table cross referencing all related points from documents depicting needs with how they have been met.
 
 \newpage
 
@@ -238,7 +267,7 @@ The purpose of this function is to return the device to its safe state ready to 
 \subsubsection{Geometry and variables of the situation}
 
 \begin{itemize}
-    \item Clearance requirement $>$5 Metres in Height ($h$), $>$2.7 Metres in width ($r$)
+    \item Clearance requirement $>$5 Metres in Height ($H$), $>$2.7 Metres in width ($R$)
     \item Angle of launch ($\theta$)
     \item Mass of payload; Buckle + Specific weight of strap ($m$)
     \item Environmental Variables; Wind, Rain
@@ -248,40 +277,47 @@ The purpose of this function is to return the device to its safe state ready to 
 
 Here we will calculate a perfect world situation where we can ignore any variables such as wind resistance operator error etc, using the method derived from \parencite{MunganCarlE.2017OtLo} accessed via the RMIT Library.
 
-\[
+\begin{equation}
 y(x)=x\tan\theta-\frac{g x^{2}}{2 v_0^{2}\cos^{2}\theta}.
-\]
+\end{equation}
 
 \ldots taking \(y(R)=H\) gives
 
-\begin{align}
-H &= R\tan\theta-\frac{g R^{2}}{2 v_0^{2}\cos^{2}\theta}
-\\
+\begin{equation*}
+H = R\tan\theta-\frac{g R^{2}}{2 v_0^{2}\cos^{2}\theta}
 \Rightarrow\quad
-v_0^{2} &= \frac{g R^{2}}{2}\,\frac{1}{\cos^{2}\theta\,(R\tan\theta-H)}.
-\end{align}
+v_0^{2} = \frac{g R^{2}}{2}\,\frac{1}{\cos^{2}\theta\,(R\tan\theta-H)}
+\end{equation*}
 
-\ldots let \(u=\tan\theta\) so that \(\sec^{2}\theta=1/\cos^{2}\theta=1+u^{2}\):
+\ldots let \(u=\tan\theta\) so that \(\sec^{2}\theta=1/\cos^{2}\theta=1+u^{2}\)
 
-\begin{equation}
-v_0^{2}=\frac{g R^{2}}{2}\;\frac{1+u^{2}}{R u - H}, \qquad u>\frac{H}{R}.
-\end{equation}
+\begin{equation*}
+v_0^{2}=\frac{g R^{2}}{2}\;\frac{1+u^{2}}{R u - H}
+\end{equation*}
+
+\ldots for a given (R,H), the minimum $v_0$ occurs at.
+
+\begin{equation*}
+    f(u) = \frac{1 + u^2}{Ru-H}, \qquad u>\frac{H}{R}
+\end{equation*}
 
 \ldots minimise \(f(u)=\dfrac{1+u^{2}}{R u - H}\). Differentiate and set to zero:
 
-\begin{equation}
+\medskip
+
+\begin{equation*}
     f'(u)=\frac{(2u)(Ru-H)-(1+u^{2})R}{(Ru-H)^{2}}=0
     \;\;\Rightarrow\;\; Ru^{2}-2Hu-R=0 \\
-\end{equation}
+\end{equation*}
 
-\ldots simplifying to
+\ldots solve the quadratic
 
-\begin{equation}
+\begin{equation*}
 u=\tan\theta
 = \frac{H+\sqrt{H^{2}+R^{2}}}{R}.
-\end{equation}
+\end{equation*}
 
-\ldots substitute \(u\) back into \(v_0^{2}\) and simplify to obtain the minimum launch speed:
+\ldots substitute \(u\) back into \(v_0^{2}\) and simplify to obtain the minimum launch velocity:
 
 \begin{equation}
 \boxed{\,v_{0,\min}=\sqrt{\,g\big(\sqrt{R^{2}+H^{2}}+H\big)}\,}
@@ -293,47 +329,65 @@ u=\tan\theta
 \boxed{\,\tan\theta=\dfrac{\sqrt{R^{2}+H^{2}}+H}{R}}
 \end{equation}
 
-Now that we have the equations we can input our values to find that $v_{0,min} \approx 10.258 m\cdot s^{-1}$, $\theta \approx 70.67 ^\circ$ additionally we can also quickly calculate the flight time simply by dividing the vertical component by the velocity and the cosine of the launch angle:
+Now that we have the equations we can input our values to find that: $v_{0,min} \approx 10.258 m\cdot s^{-1}$, $\theta \approx 70.67 ^\circ$ additionally we can also quickly calculate the flight time simply by dividing the vertical component by the velocity and the cosine of the launch angle:
 
 \begin{equation}
     t_{flight} = \frac{R}{v_0 \cos\theta} \approx 2.07s
 \end{equation}
 
-\begin{figure}[h!]
+\newpage
+
+\begin{figure}[htbp!]
 \centering
 \begin{tikzpicture}
   \begin{axis}[
-    width=17cm, height=8cm,
+    width=17cm, height=11cm,
     axis lines=middle,
     xlabel={$x$ (m)}, ylabel={$y$ (m)},
-    xmin=0, xmax=8.0,
-    ymin=0, ymax=6.5,
+    xmin=-3, xmax=9.0,      % show the -2 m standoff
+    ymin=0.0,  ymax=9,      % set baseline so the green launch sits at y=0
     domain=0:10.0,
     samples=400,
     grid=both,
     every axis plot/.append style={thick}
   ]
     % Parameters
-    \pgfmathsetmacro{\g}{9.81}   % gravity
-    \pgfmathsetmacro{\yzero}{1.0}% launch height
-    \pgfmathsetmacro{\D}{2.0}    % standoff to near edge (m)
-    \pgfmathsetmacro{\W}{2.7}    % truck width (m)
-    \pgfmathsetmacro{\Htop}{5.0} % truck height (m)
+    \pgfmathsetmacro{\g}{9.81}    % gravity
+    \pgfmathsetmacro{\yzero}{1.0} % launch height set to ground (y=0)
+    \pgfmathsetmacro{\D}{2.0}     % standoff to near edge (m) from x=0
+    \pgfmathsetmacro{\W}{2.7}     % truck width (m)
+    \pgfmathsetmacro{\Htop}{5.0}  % truck height (m)
 
-    % Optimized launch for D=2.0 m (computed): theta=70.672 deg, v0=10.258 m/s
-    \pgfmathsetmacro{\theta}{70.672}
-    \pgfmathsetmacro{\vzero}{10.258}
+    % Launch parameters
+    \pgfmathsetmacro{\theta}{70.672} % deg
+    \pgfmathsetmacro{\vzero}{10.258} % m/s (blue)
+    \pgfmathsetmacro{\vone}{12.4}    % m/s (green)
     \pgfmathsetmacro{\thetac}{cos(\theta)}
 
-    % Trajectory: y(x) = y0 + x tanθ - g x^2 /(2 v0^2 cos^2θ)
-    \addplot[blue]
+    % GREEN TRAJECTORY OFFSET: launch from x = -2 m
+    \pgfmathsetmacro{\xoffset}{-2.0}
+
+    % Blue trajectory (origin at x=0, y=0)
+    % y(x) = y0 + x tanθ - g x^2 /(2 v0^2 cos^2θ)
+    \addplot[blue,domain=0:10]
       ({x},
        {\yzero + x*tan(\theta) - (\g*x^2)/(2*\vzero*\vzero*\thetac*\thetac)})
-      node[pos=0.75, above right] {\small Trajectory};
+      node[pos=0.65, above right] {\small Blue: launch at $x{=}0$ m};
 
-    % Launch point
-    \addplot[only marks, mark=*, mark size=2pt, blue] coordinates {(0,\yzero)};
-    \node[anchor=south west, blue] at (axis cs:0.25,\yzero) {\small Launch ($y_0{=}1$ m)};
+    % Green trajectory starting at x = -2 m, baseline y0=0
+    % y(x) = y0 + (x - x0) tanθ - g (x - x0)^2 /(2 v1^2 cos^2θ), for x >= x0
+    \addplot[green!70!black,domain=\xoffset:10]
+      ({x},
+       {\yzero + (x-\xoffset)*tan(\theta)
+         - (\g*(x-\xoffset)^2)/(2*\vone*\vone*\thetac*\thetac)})
+      node[pos=0.62, above right];
+
+    % Launch points
+    \addplot[only marks, mark=*, mark size=2pt, blue]  coordinates {(0,\yzero)};
+    \addplot[only marks, mark=*, mark size=2pt, green!70!black] coordinates {(\xoffset,\yzero)};
+    \node[anchor=north west, blue] at (axis cs:0.1,\yzero) {\small Minimum $(0,0)$};
+    \node[anchor=north west, green!60!black] at (axis cs:\xoffset+0.1,\yzero)
+      {\small Design $(-2,0)$};
 
     % Truck body rectangle [D, D+W] x [0, Htop]
     \addplot[fill=gray!25, draw=gray]
@@ -347,29 +401,36 @@ Now that we have the equations we can input our values to find that $v_{0,min} \
     % Edges and labels
     \draw[dashed, gray] (axis cs:\D,0) -- (axis cs:\D,\Htop);
     \draw[dashed, gray] (axis cs:\D+\W,0) -- (axis cs:\D+\W,\Htop);
-    \node[anchor=west, gray!60!black] at (axis cs:\D+\W,3.0) {\small Truck body};
+    \node[anchor=west, gray!60!black] at (axis cs:\D+\W,2.5) {\small Truck body};
 
     % Clearance check points at near and far edges
     \addplot[only marks, mark=*, mark size=1.8pt, red]
       coordinates {(\D,\Htop) (\D+\W,\Htop)};
     \node[anchor=south, red] at (axis cs:\D,\Htop+0.4) {\tiny Near edge};
     \node[anchor=south, red] at (axis cs:\D+\W,\Htop+0.4) {\tiny Far edge};
-
-    % Angle and speed annotations
-    \node[anchor=west] at (axis cs:3.0,0.8)
-      {\small $\theta=\pgfmathprintnumber[fixed,precision=2]{\theta}^\circ$};
-    \node[anchor=west] at (axis cs:3.0,0.4)
-      {\small $v_{0}=\pgfmathprintnumber[fixed,precision=3]{\vzero}\,\mathrm{m\,s^{-1}}$};
   \end{axis}
 \end{tikzpicture}
-\caption{Diagram of the trajectory}
+\caption{Trajectory diagram comparing minimum velocity to design velocity}
+\label{fig:trajectory}
 \end{figure}
+
+\noindent Figure \ref{fig:trajectory} compares the design trajectory velocity to the minimum required velocity. As shown the design velocity provides a much larger margin for error to account for variables such as oversized loads, adverse weather conditions such as wind as well as letting the operator stand farther back from the vehicle. 
+
+\medskip
+
+The green line shows a velocity of $12.4m/s$ with a standoff distance of 4 metres from the body of the truck. The blue line shows a velocity of $10.258m/s$ with a standoff distance of 2 metres from the truck. 
 
 \subsubsection{Assumptions regarding the trajectory}
 
-In order to calculate the trajectory we need to make some assumptions, In this example the standoff distance is 2 metres from the truck body. This is also assuming that the operator is of the average male height and is holding the device roughly 1 metre in the air. Of course this is assuming the worst case scenario being the minimum required velocity.
+In order to calculate the trajectory we need to make some assumptions, In this example the standoff distance is 2 and 4 metres from the truck body. This is also assuming that the operator is of the average male height and is holding the device roughly 1 metre in the air.
 
-\subsection{Minimum launch energy}
+\medskip
+
+Since this is the minimum velocity required a safe estimate would be to add 20\% onto this value to consistently clear the load. This provides a design velocity of \textbf{$\approx 12.4m/s$}
+
+\newpage
+
+\subsection{Launch energy}
 
 \subsubsection{Launch energy requirements}
 
@@ -381,6 +442,7 @@ In order to calculate the trajectory we need to make some assumptions, In this e
 
 \begin{equation}
     J = mv_0 \quad [N \cdot s]
+\label{eqn:impulse}
 \end{equation}
 
 \ldots specific impulse of the launch
@@ -392,12 +454,11 @@ In order to calculate the trajectory we need to make some assumptions, In this e
 \ldots velocity of the recoil produced
 
 \begin{equation}
-    F_{peak} \approx \frac{J}{\Delta T} \quad [N]
+    F_{peak} \approx \frac{J}{\Delta t} \quad [N]
+    \label{eqn:fpeak}
 \end{equation}
 
 \ldots peak force generated by the launch is dependent on the time over which the force damper acts (iterated on in Table \ref{tab:recoil_forces})
-
-\newpage
 
 \subsubsection{Iteration on the masses of the projectiles}
 
@@ -410,51 +471,90 @@ In order to calculate the trajectory we need to make some assumptions, In this e
 \toprule
 Projectile mass $m$ [kg] & $E=\tfrac12 m v_0^2$ [J] & $J=m v_0$ [N$\cdot$ s] & {$v_{\rm rec}=J/m_{\rm}$ [m/s]} & $E_{\rm rec}=\tfrac12 m_{\rm} v_{\rm rec}^2$ [J] \\
 \midrule
-0.20 & 10.52 & 2.052 & 0.684 & 0.702 \\
-0.40 & 21.05 & 4.103 & 1.368 & 2.806 \\
-0.60 & 31.57 & 6.155 & 2.052 & 6.314 \\
+0.20 & 15.38 & 2.480 & 0.827 & 1.025 \\
+0.40 & 30.75 & 4.960 & 1.653 & 4.100 \\
+0.60 & 46.13 & 7.440 & 2.480 & 9.226 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]
 \footnotesize
-\textit{Note}. Device mass $(m) = 3kg$.
+\textit{Note}. Device mass $(m_{\rm}) = 3\,\mathrm{kg}$.
 \end{tablenotes}
 \end{table}
 
 \begin{table}[ht]
 \centering
-\caption{Estimated peak recoil force}
+\caption{Recoil force iterated [N]}
 \label{tab:recoil_forces}
+\begin{threeparttable}
 \begin{tabular}{@{}rccc@{}}
 \toprule
-Projectile mass $m$ [kg] & $\Delta$ t=0.05\,$s$ & $\Delta t=0.10$\,$s$ & $\Delta t=0.20$\,$s$ \\
+Projectile mass $m$ [kg] & $\Delta t=0.05$\,$s$ & $\Delta t=0.10$\,$s$ & $\Delta t=0.20$\,$s$ \\
 \midrule
-0.20 & 41.0 & 20.5 & 10.3 \\
-0.40 & 82.1 & 41.0 & 20.5 \\
-0.60 & 123.1 & 61.5 & 30.8 \\
+0.20 & 49.6 & 24.8 & 12.4 \\
+0.40 & 99.2 & 49.6 & 24.8 \\
+0.60 & 148.8 & 74.4 & 37.2 \\
 \bottomrule
 \end{tabular}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\textit{Note}. Derived from Equation \ref{eqn:fpeak} and Equation \ref{eqn:impulse}.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
-
-
-
-
-\subsubsection{Recoil mitigation requirements}
-
 
 \newpage
 
-\subsubsection{Launch Energy/Force Sizing}
 
-\subsubsection{Drive Torque and Power Comparison}
+\subsection{Recoil mitigation}
 
-\subsection{Estimation of Time Requirements}
+Recoil can be mitigated with a few techniques. The use of a damper, which is generally an arrangement of springs mounted in the stock. The other being increasing the weight of the device, For this instance both methods are used. Firstly a pilot mass is projected over the load. This is patented by the farmer and has a weight of $\approx 480g$. As per Table \ref{tab:recoil_forces} that recoil is within range.
 
-\subsection{Calculation of Real-time Requirements}
+\bigskip
 
-\subsubsection{Cycle Times by Mode}
+Focusing on this value for the mass of the projectile.
 
-\subsubsection{Total Time per Mission}
+
+\begin{align*}
+    J &= mv_0\\
+    J &= 0.48 \cdot 12.4\\
+    J &= 5.952 N \cdot s
+\end{align*}
+
+\ldots we fined the impulse for this weight to be $J = 5.952 N\cdot s$. Now using Equation \ref{eqn:fpeak} Iterate the impulse over time.
+
+\begin{table}[ht]
+\centering
+\caption{Actual recoil force [N]}
+\label{tab:recoil_forces}
+\begin{threeparttable}
+\begin{tabular}{@{}rccc@{}}
+\toprule
+Projectile mass $m$ [kg] & $\Delta t=0.05$\,$s$ & $\Delta t=0.10$\,$s$ & $\Delta t=0.20$\,$s$ \\
+\midrule
+0.48 & 49.6 & 24.8 & 12.4 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\textit{Note}. Derived from Equation \ref{eqn:fpeak} and Equation \ref{eqn:impulse}.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+For the minimum damping time\ldots
+
+\begin{equation*}
+    F \approx \frac{J}{\Delta t} \Rightarrow \Delta t \geq \frac{J}{F_{Max}}
+\end{equation*}
+
+\begin{equation*}
+    \Delta t \geq \frac{5.952}{50} = 0.119s
+\end{equation*}
+
+\newpage
+
+\subsection{Flywheel Energy}
 
 \newpage
 
