@@ -12,17 +12,21 @@
 \usepackage[margin=1in]{geometry} %can be useful to change if you have large tables or figures
 \usepackage{lipsum}
 \usepackage{pdfpages}
+\usepackage{titlesec}
+\usepackage{pdflscape}
+
 
 %Table packages
 \usepackage{colortbl}
 \usepackage{xcolor}
 \usepackage{booktabs}
-\usepackage{lscape}
 \usepackage{longtable}
 \usepackage{threeparttable}
 \usepackage{multirow}
 \usepackage{tabularx}
 \usepackage{multirow}
+\usepackage{array}
+\usepackage{makecell}
 
 %Math rendering related packages
 \usepackage{amsmath}
@@ -50,7 +54,7 @@
 
 %referencing setup/style
 \usepackage[style=apa, backend=biber]{biblatex}
-\addbibresource{References.bib}
+\addbibresource{Refs.bib}
 
 %for making the links you can press on for references and tables etc.
 \usepackage{hyperref}
@@ -63,6 +67,13 @@
     pdfpagemode=FullScreen,
     }
 
+\titleformat{\paragraph}[block]
+  {\normalfont\normalsize\bfseries}  % formatting of text
+  {\theparagraph}                    % numbering
+  {1em}                              % spacing between number and title
+  {}                                 % before-code (empty)
+\titlespacing*{\paragraph}
+  {0pt}{3.25ex plus 1ex minus .2ex}{1ex plus .2ex}
 
 
 %---------------------------%
@@ -75,11 +86,15 @@
 
 \begin{document}
 
-\fancypagestyle{plain}{} %This sets the header and footers up.
-    \fancyhf{}
-    \rfoot{Page \thepage}
-    \renewcommand{\headrulewidth}{0pt}
-    \pagestyle{fancy}
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \rfoot{Page \thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
 
 \newenvironment{FRpage}{%
   \clearpage
@@ -100,23 +115,30 @@
 
 \author{Kristian Stracke, Bailey Firman, Angus Liaubon, William Collins, Adam Blunt}\\
 \date{\today\\[2ex]
-RMIT University – Bachelor of Engineering (Mechanical) Program Code – BH070 \\
+Bachelor of Engineering (Mechanical) – BH070 \\
 \bigskip
 Systems Engineering Principles MIET2385 – Professor John Mo}
 
 
 \title{\includegraphics*[scale=0.1]{rmit-university-logo.png} \\[14ex] \textbf{Strap Launcher Detailed Design}} %This renders the graphics for the logo
 
+
+
+
+\setcounter{secnumdepth}{4}  % allow numbering down to \paragraph
+\setcounter{tocdepth}{4}     % include paragraphs in table of contents
+
 \maketitle
 \thispagestyle{empty}
-
 \pagenumbering{roman}
 \setcounter{page}{0}
 
 \newpage
-
+\cleardoublepage
 \tableofcontents
+\cleardoublepage
 \listoftables
+\cleardoublepage
 \listoffigures
 
 \newpage
@@ -135,13 +157,41 @@ Systems Engineering Principles MIET2385 – Professor John Mo}
 
 \subsection{Addressing Previous Deliverables}
 
-The first deliverable saw groups of students collaborating on developing an effective solution for assisting with strapping loads on trucks and trailers. With information provided with the scenario depictions and the supplied Q and A, the team was able to develop a solution that is viable for the local market and use with the farmer's patented technology, the strap weight. \\ \bigskip
+The first deliverable saw a self-formed group of students collaborating on developing an effective solution for assisting with strapping loads on trucks and trailers. With information provided with the scenario depictions and the supplied Q and A, the team was able to develop a solution that is viable for the local market and use with the farmer's patented technology, the strap weight.  \bigskip
 
-The proposed solution saw a device utilising a flywheel system to propel 
+\noindent The proposed solution saw a device utilising a flywheel system to propel the strap and weight over the load put onto the trucks and trailers. The deliverable saw the conversion of user requirements to system requirements, assessment of requirements and development of a solution to fix the problem within all relevant legal parameters, even developing some elements of detailed design of a functioning prototype. \bigskip 
 
-\subsection{Consolidation of Client Intentions}
+\noindent The second deliverable in relation to this prototype saw the same team who developed the theoretical functioning prototype had to pitch the product in a presentation. This pitch saw typical elements of a sales pitch in terms of the product expectations and capabilities, with less focus on the financials of the solution. \bigskip   
+
+\subsection{Consolidation of Client Requirements}
 
 After having investigated all related provided information from the farmer and delivery drivers consulted in regards to their requirements, their needs have been categorised below:
+
+\begin{table}[h]
+\caption{Consolidation of Client Requirements}
+\centering
+\renewcommand{\arraystretch}{1.4} % Adds a bit of breathing room
+\setlength{\tabcolsep}{6pt}       % Adjust cell padding if needed
+\begin{tabular}{
+    |>{\centering\arraybackslash}m{0.5\textwidth}|
+     >{\centering\arraybackslash}m{0.5\textwidth}|
+}
+\hline
+\textbf{Client Requirements} & \textbf{System Capabilities} \\ \hline
+Launch strap over loads 5.0m tall and 2.4m wide & System designed with sufficient propulsion to clear max legal load of 5.5m high and 2.7m wide, with elements of resistance taken into account for calculations such as wind speed. \\ \hline
+Less than 10kg system weight & A lightweight handheld solution has been prioritised for the solution. \\ \hline
+Portable system preferred & Design of a lightweight handheld system has been prioritised for the solution. \\ \hline
+Easy to use & Developing a simple user interface and easy operational procedure for simplicity. \\ \hline
+Secure individual strap within 2 minutes  & Having easy operational procedure with quick reset time between launches. \\ \hline
+Small enough to store in truck cabin ("no bigger than a sports bag") & Compact system design, utilising generic physical construction to allow for fitting in more convenient locations where required. \\ \hline
+No "excessive labour" to operate & Incorporated in the lightweight handheld design ideals, and the easy operation ideals. \\ \hline
+Able to be used by sole operator & Having the system only needing the handheld component of the device to propel the strap, without need of a target projection system on the other side. \\ \hline
+Usable in varying weather conditions (wind, rain and heat) & Material selection to be suitable to typical weather conditions seen in Australian farming environments throughout the year. \\ \hline
+Use patented strap weight in design of solution &
+The housing area for the object to be propelled has been considered to be the strap weight. \\ \hline
+\end{tabular}
+\label{tab:ClientRequirements}
+\end{table}
 
 %Insert table cross referencing all related points from documents depicting needs with how they have been met.
 
@@ -246,17 +296,45 @@ The purpose of this function is to return the device to its safe state ready to 
 
 \subsection{Subsystem Explanation}
 
-\subsubsection{User Interface and Control}
-
 \subsubsection{Propulsion and Power}
 
-\subsubsection{Launch Mechanism}
+\paragraph{Primary Power} 
 
-\subsubsection{Payload and Strap Handling}
+The Strap Propulsion Device (SPD) primarily uses an electric motor flywheel system to function. This system works by the motor speeding up a flywheel to store rotational energy, which is then used to propel the strap clasp from its resting position. This method ensures dependable performance across various loads and operational scenarios without the need for external assistance. From the user's standpoint, the handheld launcher design simplifies aiming and controlling the strap's path, reducing the physical exertion typically associated with manual throwing. The launch speed can be modified via motor input control, allowing users to adjust propulsion based on different load sizes and weather conditions. A digital display offers real-time data on motor speed and power settings, enabling users to verify launch parameters before activation. The device is powered by either a rechargeable onboard battery pack or a standard 12/24 V vehicle connection. A docking station provides easy recharging between uses, minimising downtime and eliminating the hassle of frequent battery replacements.
+
+
+\paragraph{Alternative Power} 
+
+Though primarily intended for electric propulsion, the SPD is equipped with a straightforward pneumatic backup for scenarios where electricity access is restricted, such as in secluded farms or extended field applications. This backup system incorporates a compressed air canister alike those found in nail guns or portable compressors, which is directly linked to a small piston mechanism within the launcher. Upon activation, the compressed air is released into the piston chamber, propelling the launch mechanism forward and launching the strap. A pressure regulator ensures the launch force stays within safe operating thresholds. While this pneumatic option serves as an emergency fallback, it lacks the precision and adjustability of the electric system.
+
+
+\subsubsection{User Interface and Control}
+
+The User Interface establishes the boundary for operators when setting up, arming, and launching systems, featuring controls that can be operated with gloves, such as an arm/disarm switch, a protected momentary trigger, and a toggle for handheld or mounted mode. A display that is readable in daylight conditions shows critical information like motor RPM, the energy stored in the flywheel, the status of the battery or a 12/24 V vehicle power supply, and the projected clearance or overshoot based on the angles from sensors and the current velocity setting. Launch velocity is selected via preset levels with options for precise adjustments. Upon arming, the subsystem performs a methodical pre-launch checklist: verifying battery charge or external power, ensuring the motor operates within speed and thermal constraints, checking the engagement of the clutch and holding latch, confirming the muzzle angle is within a safe range, and affirming the exclusion zone status. Only when all conditions are met does the trigger become active, with any inhibiting factors communicated through straightforward diagnostic messages. If the pneumatic backup mode is chosen, the display adjusts to show line pressure and valve condition, prevents firing below a specified minimum pressure, and notes the predicted trajectory based on pressure and angle data. Charging and docking functions are incorporated, showing charge rates and estimated readiness times to minimise downtime. Automatic timeouts revert the subsystem to a safe state after extended inactivity. The overall design of the User Interface aims to reduce cognitive load through a straightforward set $\rightarrow$ arm $\rightarrow$ fire process, ensuring the operator receives ample feedback to meet clearance and overshoot requirements with minimal physical effort.
 
 \subsubsection{Safety}
 
+The Safety subsystem is responsible for isolating energy and managing potential hazards in both propulsion modes. It necessitates a series of hardware checks before launch can proceed: ensuring safe elevation and azimuth, completing the arming process, verifying latch and clutch integrity, engaging mount locks, and confirming that flywheel speed and temperature are within acceptable ranges. Additionally, for pneumatic backup, it checks for minimum line pressure and a reliable valve path. The safety relay only closes when all these checks are satisfied, and any failure results in a latched inhibit with a specific trip code. An Emergency Stop works by de-energising to trip; it halts motor drive, applies the flywheel brake, disengages the clutch and holding latch, and opens a normally-open vent to release air—loss of power triggers the same safety responses (default-to-safe). Recoil is capped at 50 N or less; if exceeded, re-arming is blocked until rectified. The subsystem reports permissive and trip status to the User Interface for display and logging but does not rely on this for stopping the plant. This configuration meets the safety requirements for interlock, emergency stop, recoil control, and exclusion-zone protection within the specified environmental conditions.
+
+\subsubsection{Payload and Strap Loading}
+
+The SPD is engineered to accommodate standard ratchet straps commonly used in trucking and farming, regardless of whether strap weights are attached. These straps are placed into a propulsion clasp lock that firmly holds the buckle until the launch is activated. This clasp is compatible with typical buckle types to ensure maximum compatibility. The loading procedure is designed to be straightforward and consistent, enabling an operator to quickly prepare multiple straps.
+
+\subsubsection{Launch Mechanism} %Needs paraphrasing
+
+The launch system mainly comprises a user-controlled trigger and a safety switch. In electric mode, the launch process starts when the safety switch is turned off and the trigger is pressed, causing the flywheel to accelerate to the selected speed. Pressing the trigger again engages the flywheel, releasing the strap. Alternatively, in pneumatic backup mode, once the canister is loaded and the safety switch is turned off, the strap is immediately ready to fire when the trigger is pressed.
+
+To manage recoil in electric mode, power selection settings are designed to ensure that no more than 50N of force is exerted on the user. In pneumatic mode, a bleed valve releases any pressure that exceeds the safety threshold, thus preventing excessive recoil. Additionally, for user comfort while using the SPD, a rubber butt stock is attached to absorb any felt recoil.
+
+\subsubsection{System Fault Diagnostics} %Needs paraphrasing
+
+The SPD is designed to be a dependable tool, with fault diagnostics capabilities allowing operators to swiftly pinpoint and fix issues on-site. This feature aids in system maintenance and is closely tied to data logging. Sensors are strategically placed in key components where faults are most likely to arise, such as the payload area, battery and power connections, and the motor controller. These sensors detect strap jams, electrical issues, or motor failures, and in pneumatic backup mode, a pressure sensor ensures proper pressurisation before launch. When a fault is identified, the data is transmitted to the user display with a clear popup message, consistent with fault reporting, facilitating rapid troubleshooting without the need for specialised training.
+
+\newpage
+
 \subsection{Test Plans}
+
+
 
 \newpage
 
@@ -338,6 +416,7 @@ Now that we have the equations we can input our values to find that: $v_{0,min} 
 \newpage
 
 \begin{figure}[htbp!]
+\caption{Trajectory diagram comparing minimum velocity to design velocity}
 \centering
 \begin{tikzpicture}
   \begin{axis}[
@@ -410,7 +489,6 @@ Now that we have the equations we can input our values to find that: $v_{0,min} 
     \node[anchor=south, red] at (axis cs:\D+\W,\Htop+0.4) {\tiny Far edge};
   \end{axis}
 \end{tikzpicture}
-\caption{Trajectory diagram comparing minimum velocity to design velocity}
 \label{fig:trajectory}
 \end{figure}
 
@@ -478,7 +556,7 @@ Projectile mass $m$ [kg] & $E=\tfrac12 m v_0^2$ [J] & $J=m v_0$ [N$\cdot$ s] & {
 \end{tabular}
 \begin{tablenotes}[flushleft]
 \footnotesize
-\textit{Note}. Device mass $(m_{\rm}) = 3\,\mathrm{kg}$.
+\textit{Note}. Device mass $(m_{\rm}) = 9\,\mathrm{kg}$.
 \end{tablenotes}
 \end{table}
 
@@ -544,17 +622,121 @@ Projectile mass $m$ [kg] & $\Delta t=0.05$\,$s$ & $\Delta t=0.10$\,$s$ & $\Delta
 
 For the minimum damping time\ldots
 
-\begin{equation*}
+\begin{equation}
     F \approx \frac{J}{\Delta t} \Rightarrow \Delta t \geq \frac{J}{F_{Max}}
-\end{equation*}
+\end{equation}
 
 \begin{equation*}
     \Delta t \geq \frac{5.952}{50} = 0.119s
 \end{equation*}
 
+
 \newpage
 
-\subsection{Flywheel Energy}
+\subsection{Flywheel Design}
+
+For the electrical propulsion it is difficult for a small electric motor to impart the required amount of force on the projectile over such a short distance of action. Similarly as to how a bow or crossbow works, storing mechanical potential energy in a string allows the wielder to impart far more energy as opposed to simply throwing the arrow. Here we will apply the same principle. In this instance a flywheel will be utilised.
+
+\subsubsection{Flywheel Design Considerations}
+
+There are a couple factors to consider when designing the flywheel:
+
+\begin{itemize}
+    \item The energy required to be stored to meet the criteria
+    \item The size of the flywheel
+    \item The material of the flywheel
+    \item The bearing and the support structure; How does it interface with the rest of the device
+    \item Stress concentrations around the bore and fillets
+\end{itemize}
+
+\subsubsection{Flywheel Energy Calculations}
+
+Firstly the projectile energy needs to be calculated\ldots
+
+\begin{equation}
+    E_p = \frac{1}{2}m_pv^2_0 \qquad [J]
+\end{equation}
+
+\begin{equation*}
+    E_p = 36.9J
+\end{equation*}
+
+\ldots the flywheel needs to at minimum store 36.9 Joules, although after accounting for aero, grip, slip and frictional losses, assume that only 70\% of the energy will be transferred:
+
+\begin{equation}
+    \Delta E_{FW} = \frac{E_p}{\eta}
+\end{equation}
+
+\begin{equation*}
+    \Delta E_{FW} = 52.7J, \qquad \eta = 0.70
+\end{equation*}
+
+\noindent Taking this value the inertia, speeds and dimensions of the flywheel can be found, A speed drop of 75\% will be assumed to keep the flywheel light as well as lower speeds for safety\ldots
+
+\begin{equation}
+    \Delta E_{FW} = \frac{1}{2}(\omega^2_1-\omega^2_2) \Rightarrow \frac{1}{2}I(1-0.25)\omega^2_1, \qquad     \omega_2 = 0.25\omega_1
+\end{equation}
+
+\begin{equation*}
+    \Delta E_{FW} = 0.46875 I \omega^2_1
+\end{equation*}
+
+\ldots with the target $\Delta E_{FW} = 52.6J$ use $\omega_1 = 8000 RPM = 837.76 rad \cdot s^{-1}$
+
+\begin{equation*}
+    I = \frac{52.7}{0.46875 I \omega^2_1} = 1.60 \times 10^{-4} kg \cdot m^2
+\end{equation*}
+
+\ldots find the disc mass from inertia, choose an example thickness of $5mm$ this leaves room for machining:
+
+\begin{equation}
+    I = \frac{1}{2}\rho \pi r^4 t \Rightarrow r = \sqrt[\leftroot{-3}\uproot{3}4]{\frac{2 I}{\rho \pi t}}
+\end{equation}
+
+\begin{equation*}
+    r = 40.21mm
+\end{equation*}
+
+\newpage
+
+\subsubsection{Flywheel Calculations Summary}
+
+For this flywheel a solid design will be used to save on machining cost space as well as increasing the structural rigidity of the flywheel. 304 Stainless will be used as the material for its cheap cost, high strength and corrosion resistance to meet the users environmental requirements
+
+\begin{itemize}
+    \item Radius: $r = 40.21mm$
+    \item $\rho_{304} = 8000kg/m^3$
+    \item Mass: $m = \rho \pi r^2 t = 0.201$
+\end{itemize}
+
+\paragraph{Material stresses}
+
+For the flywheels hoop stresses at $8000RPM$ the rim speed is\ldots
+
+\begin{equation}
+    v = r\omega = 33.48m \cdot s^{-1}
+\end{equation}
+
+\ldots therefore the thin rim hoop estimated stress is:
+
+\begin{equation}
+    \sigma \approx \rho v^2 \approx 9.0\text{MPa}
+\end{equation}
+
+\noindent 304 Stainless has a reported Yield strength ($S_y$) $\approx 205\text{MPa}$ \textcite{DMConsultancy304} the stresses in the flywheel are a fraction of this value.
+
+\newpage
+
+\subsection{Clutch Design}
+
+
+\newpage
+
+\subsection{Motor Design}
+
+\newpage
+
+\subsection{Damper Design}
 
 \newpage
 
@@ -566,9 +748,129 @@ For the minimum damping time\ldots
 
 \subsection{Scope and Objectives}
 
+
+
 \subsection{Roles and Responsibilities}
 
+
+
+\newpage
+
 \subsection{Work Breakdown Structure}
+
+%Table here to categorise all work done
+
+\begin{table}[h!]
+\centering
+\caption{Work Breakdown} \medskip
+\begin{tabular}{|c|l|l|l|l|c|}
+\hline
+Name & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Bailey\\ Firman\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Kristian\\ Stracke\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}William\\ Collins\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Angus\\ Liaubon\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Adam\\ Blunt\end{tabular}} \\ \hline
+Contribution & s4036816 & s4037579 & s4037366 & s4036652 & s3906627 \\ \hline
+1 &  &  &  &  &  \\ \hline
+2 &  &  &  &  &  \\ \hline
+3 &  &  &  &  &  \\ \hline
+4 &  &  &  &  &  \\ \hline
+5 &  &  &  &  &  \\ \hline
+6 &  &  &  &  &  \\ \hline
+7 &  &  &  &  &  \\ \hline
+8 &  &  &  &  &  \\ \hline
+9 &  &  &  &  &  \\ \hline
+10 &  &  &  &  &  \\ \hline
+\end{tabular}
+\label{tab:WorkBreakdown}
+\end{table}
+
+\underline{\textbf{Tasks:}}
+\smallskip
+\begin{enumerate}[label=\arabic*.]
+    \item Introduction
+    
+    \begin {enumerate}[label*=\arabic*]
+    
+        \item Addressing Previous Deliverables
+        
+        \item Consolidation of Client Requirements
+        
+    \end{enumerate}
+
+    \item Summary of Functions and Sub-Systems
+
+    \begin{enumerate}[label*=\arabic*]
+    
+        \item Functions
+
+        \item Subsystem Explanation
+
+        \item Test Plans
+        
+    \end{enumerate}
+
+    \item Numerical Proof of Functions
+    
+    \begin{enumerate}[label*=\arabic*.]
+    
+        \item Launch Energy Required to Satisfy Requirements
+
+        \item Launch Energy
+
+        \item Recoil Mitigation
+
+        \item Flywheel Design
+
+        \item Clutch Design
+
+        \item Motor Design
+
+        \item Damper Design
+
+    \end{enumerate}
+
+    \item Assembly Drawings
+
+    \item Systems Engineering Management Plan (SEMP)
+
+    \begin{enumerate}[label*=\arabic*]
+    
+        \item Scope and Objectives
+
+        \item Roles and Responsibilities
+
+        \item Work Breakdown Structure
+
+        \item Risk Management
+
+        \item Verification and Validation Plan
+
+        \item Configuration Management
+
+        \item Quality Management
+
+        \item Safety Management
+
+        \item Maintenance and Support Plan
+        
+    \end{enumerate}
+
+    \item Appendices
+
+    \begin{enumerate}[label*=\arabic*]
+    
+        \item FFBDs
+
+        \item Function Tree
+
+        \item UR-SR Traceability Matrix
+
+        \item Interface Definitions
+
+        \item Test Procedures
+        
+    \end{enumerate}
+    
+\end{enumerate}
+
+\newpage
 
 \subsection{Schedule and Milestones}
 

@@ -1,0 +1,33 @@
+
+
+Inlcude anything in here that you think someone else should know about when they complete their section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Flywheel:
+Components:
+vibration sensor
+bearing structure
+
+
+Motor:
+
+
+Damper:
